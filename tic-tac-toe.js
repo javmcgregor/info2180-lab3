@@ -52,6 +52,18 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         squares[i].addEventListener('mouseout', function () {
             squares[i].classList.remove('hover');
+            
         });
     }
+
+    newGameBtn.addEventListener('click', function () {
+        for (let i = 0; i < squares.length; i++) {
+            squares[i].textContent = '';
+            squares[i].classList.remove('X', 'O');
+        }
+        gameState = ['', '', '', '', '', '', '', '', ''];
+        currentPlayer = 'X';
+        statusDiv.textContent = 'Move your mouse over a square and click to play an X or an O.';
+        statusDiv.classList.remove('you-won');
+    });
 });
