@@ -30,5 +30,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             }
         });
+        
+        // Handles the hover effect over the squares.
+        squares[i].addEventListener('mouseover', function () {
+            squares[i].classList.add('hover');
+        });
+        squares[i].addEventListener('mouseout', function () {
+            squares[i].classList.remove('hover');
+        });
     }
 });
