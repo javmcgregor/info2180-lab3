@@ -11,55 +11,58 @@ square.forEach(square => {
 });
 
 window.addEventListener('DOMContentLoaded', function () {
-    const squares = document.querySelectorAll('#board div');
+    const squ = document.querySelectorAll('#board div');
+    const statusDiv = document.getElementById('status');
+    const newGameBtn = document.querySelector('.btn');
     let currentPlayer = 'X';
     let gameState = ['', '', '', '', '', '', '', '', ''];
 
-    // Adds the squares class to all squares
-    for (let i = 0; i < squares.length; i++) {
-        squares[i].classList.add('square');
+    // Add the square class to each div
+    for (let i = 0; i < squ.length; i++) {
+        squ[i].classList.add('square');
 
-        // Allows you to click a square to place X or O
-        squares[i].addEventListener('click', function () {
-            if (squares[i].textContent === '') {
-                squares[i].textContent = currentPlayer;
-                squares[i].classList.add(currentPlayer);
-                gameState[i] = currentPlayer;
-            
-            
-                //Code runs an if statement to check for the winner
-                if (
-                    (gameState[0] === currentPlayer && gameState[1] === currentPlayer && gameState[2] === currentPlayer) ||
-                    (gameState[3] === currentPlayer && gameState[4] === currentPlayer && gameState[5] === currentPlayer) ||
-                    (gameState[6] === currentPlayer && gameState[7] === currentPlayer && gameState[8] === currentPlayer) ||
-                    (gameState[0] === currentPlayer && gameState[3] === currentPlayer && gameState[6] === currentPlayer) ||
-                    (gameState[1] === currentPlayer && gameState[4] === currentPlayer && gameState[7] === currentPlayer) ||
-                    (gameState[2] === currentPlayer && gameState[5] === currentPlayer && gameState[8] === currentPlayer) ||
-                    (gameState[0] === currentPlayer && gameState[4] === currentPlayer && gameState[8] === currentPlayer) ||
-                    (gameState[2] === currentPlayer && gameState[4] === currentPlayer && gameState[6] === currentPlayer)
-                ) {
-                    statusDiv.textContent = `Congratulations! ${currentPlayer} is the Winner!`;
-                    statusDiv.classList.add('you-won');
-                } else {
-                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                }
+        //Handles the clicks on each square.
+        squ[i].addEventListener('click', function () {
+            //Prevents the changing of squares or playing after a win
+            if (squ[i].textContent !== '' || statusDiv.classList.contains('you-won')) return;
+
+            squ[i].textContent = currentPlayer;
+            squ[i].classList.add(currentPlayer);
+            gameState[i] = currentPlayer;
+
+            // Checks for a winner
+            if (
+                (gameState[0] === currentPlayer && gameState[1] === currentPlayer && gameState[2] === currentPlayer) ||
+                (gameState[3] === currentPlayer && gameState[4] === currentPlayer && gameState[5] === currentPlayer) ||
+                (gameState[6] === currentPlayer && gameState[7] === currentPlayer && gameState[8] === currentPlayer) ||
+                (gameState[0] === currentPlayer && gameState[3] === currentPlayer && gameState[6] === currentPlayer) ||
+                (gameState[1] === currentPlayer && gameState[4] === currentPlayer && gameState[7] === currentPlayer) ||
+                (gameState[2] === currentPlayer && gameState[5] === currentPlayer && gameState[8] === currentPlayer) ||
+                (gameState[0] === currentPlayer && gameState[4] === currentPlayer && gameState[8] === currentPlayer) ||
+                (gameState[2] === currentPlayer && gameState[4] === currentPlayer && gameState[6] === currentPlayer)
+            ) {
+                statusDiv.textContent = `Congratulations! ${currentPlayer} is the Winner!`;
+                statusDiv.classList.add('you-won');
+            } else {
+                //Switches the players.
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             }
         });
-            
-        // Handles the hover effect over the squares.
-        squares[i].addEventListener('mouseover', function () {
-            squares[i].classList.add('hover');
+
+        // Manages the hover effect over the squares
+        squ[i].addEventListener('mouseover', function () {
+            squ[i].classList.add('hover');
         });
-        squares[i].addEventListener('mouseout', function () {
-            squares[i].classList.remove('hover');
-            
+        squ[i].addEventListener('mouseout', function () {
+            squ[i].classList.remove('hover');
         });
     }
 
+    // Resets game after the New game button is clicked
     newGameBtn.addEventListener('click', function () {
-        for (let i = 0; i < squares.length; i++) {
-            squares[i].textContent = '';
-            squares[i].classList.remove('X', 'O');
+        for (let i = 0; i < squ.length; i++) {
+            squ[i].textContent = '';
+            squ[i].classList.remove('X', 'O');
         }
         gameState = ['', '', '', '', '', '', '', '', ''];
         currentPlayer = 'X';
